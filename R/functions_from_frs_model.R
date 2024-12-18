@@ -1,4 +1,3 @@
-# library(zoo)
 
 #Rolling Present Value function. Note that the first value in the pmt_vec vector must be zero.
 #' @export
@@ -295,21 +294,21 @@ PVFB_CB <- function(ee_bal_vec, er_bal_vec, ee_cont_vec, er_cont_vec, icr, yos_v
 
 
 
-#Present Value of Future Salaries (PVFS) function (to be applied to a vector of salaries)
-#remaining_prob_vec is a vector containing the remaining probabilities. interest_vec is a discount rate (ARR) vector. sal_vec is a vector containing the salaries.
-#' @export
-get_pvfs <- function(remaining_prob_vec, interest_vec, sal_vec) {
-  PVFS <- double(length = length(sal_vec))
-  for (i in 1:length(sal_vec)) {
-    remaining_prob_og <- remaining_prob_vec[i:length(remaining_prob_vec)]
-    remaining_prob <- remaining_prob_og / remaining_prob_og[1]
-    interest <- interest_vec[i]
-    sal <- sal_vec[i:length(sal_vec)]
-    sal_adjusted <- sal * remaining_prob
-    PVFS[i] <- npv(interest, sal_adjusted)
-  }
-  return(PVFS)
-}
+#' #Present Value of Future Salaries (PVFS) function (to be applied to a vector of salaries)
+#' #remaining_prob_vec is a vector containing the remaining probabilities. interest_vec is a discount rate (ARR) vector. sal_vec is a vector containing the salaries.
+#' #' @export
+#' get_pvfs <- function(remaining_prob_vec, interest_vec, sal_vec) {
+#'   PVFS <- double(length = length(sal_vec))
+#'   for (i in 1:length(sal_vec)) {
+#'     remaining_prob_og <- remaining_prob_vec[i:length(remaining_prob_vec)]
+#'     remaining_prob <- remaining_prob_og / remaining_prob_og[1]
+#'     interest <- interest_vec[i]
+#'     sal <- sal_vec[i:length(sal_vec)]
+#'     sal_adjusted <- sal * remaining_prob
+#'     PVFS[i] <- npv(interest, sal_adjusted)
+#'   }
+#'   return(PVFS)
+#' }
 
 
 #Annuity factor for current retirees' benefits

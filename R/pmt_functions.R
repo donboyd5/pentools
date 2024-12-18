@@ -39,7 +39,6 @@ annfactor <- function(surv_DR_vec, cola_vec, one_time_cola = FALSE) {
 
 # functions that need to be tested ----------------------------------------
 
-
 #' #' Calculate first payment of an annuity due
 #' #'
 #' #' With interest rate (rate) and remaining period (t)
@@ -106,6 +105,7 @@ annfactor <- function(surv_DR_vec, cola_vec, one_time_cola = FALSE) {
 #'   get_pmt_due(r, nper)*pv
 #' }
 
+
 #' #' Recursive Growing Function with Lag
 #' #'
 #' #' This function calculates a series of values that grow recursively based on an initial value and a vector of growth rates, incorporating a lag effect.
@@ -134,6 +134,7 @@ annfactor <- function(surv_DR_vec, cola_vec, one_time_cola = FALSE) {
 #'   return(x)
 #' }
 
+
 #' #' Recursive Growing Function (No Lag)
 #' #'
 #' #' This function calculates a series of values that grow recursively based on an initial value and a vector of growth rates, without incorporating a lag effect.
@@ -161,6 +162,7 @@ annfactor <- function(surv_DR_vec, cola_vec, one_time_cola = FALSE) {
 #'   g[1:length(g)-1] <- g[2:length(g)]
 #'   recur_grow(x, g)
 #' }
+
 
 #' #' Recursive Growing Function with a Single Base and Fixed Growth Rate
 #' #'

@@ -68,6 +68,21 @@ recur_grow3 <- function(x, g, nper) {
 }
 
 
+#Amo payment functions
+#pmt0 = basic amo payment calculation, assuming payment beginning of period
+#' @export
+get_pmt0 <- function(r, nper, pv) {
+  if (r == 0) {
+    a <- pv/nper
+  } else {
+    a <- ifelse(nper == 0, 0, pv*r*(1+r)^(nper-1)/((1+r)^nper-1))
+  }
+
+  return(a)
+}
+
+
+
 # more functions ----------------------------------------------------------
 
 
@@ -149,16 +164,3 @@ get_pvfs <- function(remaining_prob_vec, interest_vec, sal_vec) {
 #   }
 #   return(annfactor_vec)
 # }
-
-#Amo payment functions
-#pmt0 = basic amo payment calculation, assuming payment beginning of period
-#' @export
-get_pmt0 <- function(r, nper, pv) {
-  if (r == 0) {
-    a <- pv/nper
-  } else {
-    a <- ifelse(nper == 0, 0, pv*r*(1+r)^(nper-1)/((1+r)^nper-1))
-  }
-
-  return(a)
-}

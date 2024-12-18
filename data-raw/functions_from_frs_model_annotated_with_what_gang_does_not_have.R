@@ -1,133 +1,140 @@
 
-#Rolling Present Value function. Note that the first value in the pmt_vec vector must be zero.
-#' @export
-roll_pv <- function(rate, g = 0, nper, pmt_vec, t = 1) {
-  pv_vec <- double(length(pmt_vec))
-  for (i in 1:length(pv_vec)) {
-    if (i == 1) {
-      pv_vec[i] <- pv(rate, g, nper, pmt_vec[2], t)
-    } else {
-      pv_vec[i] <- pv_vec[i-1] * (1 + rate) - pmt_vec[i] * (1 + rate)^(1 - t)
-    }
-  }
-
-  return(pv_vec)
-}
-
-
-
-#NPV function
-#' @export
-npv = function(rate, cashflows) {
-  for(i in 1:length(cashflows)){
-    if(i == 1){
-      NPV <- cashflows[i]/((1+rate)^(i))
-    } else {
-      NPV <- NPV + cashflows[i]/((1+rate)^(i))
-    }
-  }
-
-  return(NPV)
-}
+#' #Rolling Present Value function. Note that the first value in the pmt_vec vector must be zero.
+#' #' @export
+#' roll_pv <- function(rate, g = 0, nper, pmt_vec, t = 1) {
+#'   pv_vec <- double(length(pmt_vec))
+#'   for (i in 1:length(pv_vec)) {
+#'     if (i == 1) {
+#'       pv_vec[i] <- pv(rate, g, nper, pmt_vec[2], t)
+#'     } else {
+#'       pv_vec[i] <- pv_vec[i-1] * (1 + rate) - pmt_vec[i] * (1 + rate)^(1 - t)
+#'     }
+#'   }
+#'
+#'   return(pv_vec)
+#' }
 
 
-#rolling NPV function
-#' @export
-roll_npv <- function(rate, cashflows) {
-  npv_vec <- double(length = length(cashflows))
-  for (i in 1:(length(cashflows)-1)) {
-    npv_vec[i] <- npv(rate, cashflows[(i+1):length(cashflows)])
-  }
+#' #NPV function
+#' #' @export
+#' npv = function(rate, cashflows) {
+#'   for(i in 1:length(cashflows)){
+#'     if(i == 1){
+#'       NPV <- cashflows[i]/((1+rate)^(i))
+#'     } else {
+#'       NPV <- NPV + cashflows[i]/((1+rate)^(i))
+#'     }
+#'   }
+#'
+#'   return(NPV)
+#' }
 
-  return(npv_vec)
-}
+
+# Gang does not have this
+# roll_npv is not used in any FRS code I think
+#' #rolling NPV function
+#' #' @export
+#' roll_npv <- function(rate, cashflows) {
+#'   npv_vec <- double(length = length(cashflows))
+#'   for (i in 1:(length(cashflows)-1)) {
+#'     npv_vec[i] <- npv(rate, cashflows[(i+1):length(cashflows)])
+#'   }
+#'
+#'   return(npv_vec)
+#' }
 
 
-#Amo payment functions
-#pmt0 = basic amo payment calculation, assuming payment beginning of period
-#' @export
-get_pmt0 <- function(r, nper, pv) {
-  if (r == 0) {
-    a <- pv/nper
-  } else {
-    a <- ifelse(nper == 0, 0, pv*r*(1+r)^(nper-1)/((1+r)^nper-1))
-  }
+#' #Amo payment functions
+#' #pmt0 = basic amo payment calculation, assuming payment beginning of period
+#' #' @export
+#' get_pmt0 <- function(r, nper, pv) {
+#'   if (r == 0) {
+#'     a <- pv/nper
+#'   } else {
+#'     a <- ifelse(nper == 0, 0, pv*r*(1+r)^(nper-1)/((1+r)^nper-1))
+#'   }
+#'
+#'   return(a)
+#' }
 
-  return(a)
-}
+# Gang does not have this
+#' #pmt = amo payment function with growth rate and timing added; t = 1 for end of period payment, 0.5 for half period, and 0 for beginning of period.
+#' #' @export
+#' get_pmt <- function(r, g = 0, nper, pv, t = 1) {
+#'   a <- get_pmt0((1+r)/(1+g) - 1, nper, pv*(1+r)^t)
+#'   return(a)
+#' }
 
-#pmt = amo payment function with growth rate and timing added; t = 1 for end of period payment, 0.5 for half period, and 0 for beginning of period.
-#' @export
-get_pmt <- function(r, g = 0, nper, pv, t = 1) {
-  a <- get_pmt0((1+r)/(1+g) - 1, nper, pv*(1+r)^t)
-  return(a)
-}
-
-#Funding period function
-#' @export
-NPER <- function(r,g,pv,t,pmt){
-  PV <- pv*(1+r)^t
-  R <- (1+r)/(1+g) - 1
-  TempValue <- PV*R/(pmt*(1+R))
-  NPER <- -log(1-TempValue,(1+R))
-  if(is.infinite(NPER)) {NPER <- 100}
-  if(is.nan(NPER)) {NPER <- 100}
-  return(NPER)
-}
+# Gang does not have this
+#' #Funding period function
+#' #' @export
+#' NPER <- function(r,g,pv,t,pmt){
+#'   PV <- pv*(1+r)^t
+#'   R <- (1+r)/(1+g) - 1
+#'   TempValue <- PV*R/(pmt*(1+R))
+#'   NPER <- -log(1-TempValue,(1+R))
+#'   if(is.infinite(NPER)) {NPER <- 100}
+#'   if(is.nan(NPER)) {NPER <- 100}
+#'   return(NPER)
+#' }
 
 # NPER(0.07, g = 0, pv = 5000, t = 1, pmt = 1000)
 
-#Cumulative future values function (with interest being a single value)
-#' @export
-get_cum_fv <- function(interest, cashflow, first_value = 0){
-  cumvalue <- double(length = length(cashflow))
-  cumvalue[1] <- first_value
-  for (i in 2:length(cumvalue)) {
-    cumvalue[i] <- cumvalue[i - 1]*(1 + interest) + cashflow[i - 1]
-  }
-  return(cumvalue)
-}
+# Gang does not have this
+#' #Cumulative future values function (with interest being a single value)
+#' #' @export
+#' get_cum_fv <- function(interest, cashflow, first_value = 0){
+#'   cumvalue <- double(length = length(cashflow))
+#'   cumvalue[1] <- first_value
+#'   for (i in 2:length(cumvalue)) {
+#'     cumvalue[i] <- cumvalue[i - 1]*(1 + interest) + cashflow[i - 1]
+#'   }
+#'   return(cumvalue)
+#' }
 
 
-#Cumulative future values function (with interest being a vector)
-#' @export
-cumFV2 <- function(interest_vec, cashflow, first_value = 0){
-  cumvalue <- double(length = length(cashflow))
-  cumvalue[1] <- first_value
-  for (i in 2:length(cumvalue)) {
-    cumvalue[i] <- cumvalue[i - 1]*(1 + interest_vec[i]) + cashflow[i - 1]
-  }
-  return(cumvalue)
-}
+# Gang does not have this
+#' #Cumulative future values function (with interest being a vector)
+#' #' @export
+#' cumFV2 <- function(interest_vec, cashflow, first_value = 0){
+#'   cumvalue <- double(length = length(cashflow))
+#'   cumvalue[1] <- first_value
+#'   for (i in 2:length(cumvalue)) {
+#'     cumvalue[i] <- cumvalue[i - 1]*(1 + interest_vec[i]) + cashflow[i - 1]
+#'   }
+#'   return(cumvalue)
+#' }
 
 
-#' @export
-baseR.rollmean <- function(data, window_vec) {
-  # Rolling mean function (a lot faster than zoo's rollmean)
-  # note that this roll mean function assumes a "lagged" data vector
-  n <- length(data)
-  y <- double(n)
-  for (i in 1:n) {
-    window <- window_vec[i]
-    if (i > window) {
-      y[i] <- mean(data[(i-window):(i-1)])
-    } else {
-      y[i] <- NA
-    }
-  }
-  return(y)
-}
+# Gang does not have this
+# #' @export
+# baseR.rollmean <- function(data, window_vec) {
+#   # Rolling mean function (a lot faster than zoo's rollmean)
+#   # note that this roll mean function assumes a "lagged" data vector
+#   n <- length(data)
+#   y <- double(n)
+#   for (i in 1:n) {
+#     window <- window_vec[i]
+#     if (i > window) {
+#       y[i] <- mean(data[(i-window):(i-1)])
+#     } else {
+#       y[i] <- NA
+#     }
+#   }
+#   return(y)
+# }
 
 
+# Gang does not have this
 #Geometric average return function
-#' @export
-geo_return <- function(x, na.rm = F) {
-  if (na.rm == T) {
-    x = na.omit(x)
-  }
-  avg_return <- prod(1+x)^(1/length(x)) - 1
-  return(avg_return)
-}
+#' #' @export
+#' geo_return <- function(x, na.rm = F) {
+#'   if (na.rm == T) {
+#'     x = na.omit(x)
+#'   }
+#'   avg_return <- prod(1+x)^(1/length(x)) - 1
+#'   return(avg_return)
+#' }
 
 
 #Estimate geometric average return from arithmetic return and standard deviation (annualized)

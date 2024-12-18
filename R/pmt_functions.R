@@ -36,6 +36,10 @@ annfactor <- function(surv_DR_vec, cola_vec, one_time_cola = FALSE) {
 }
 
 
+
+# functions that need to be tested ----------------------------------------
+
+
 #' #' Calculate first payment of an annuity due
 #' #'
 #' #' With interest rate (rate) and remaining period (t)

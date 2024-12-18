@@ -1,7 +1,7 @@
 Package: pentools
 Type: Package
 Title: Tools for Working with pendata and penmodel
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: c(
     person("Gang", "Chen", email = "gchen3@albany.edu", role = "aut"),
     person("Don", "Boyd", email = "donboyd5@gmail.com", role = c("aut", "cre"))

@@ -21,8 +21,10 @@ This function computes the present value of future salaries (PVFS) for a given s
 }
 \details{
 The present value of future salaries is calculated by:
-- Adjusting projected salaries by the survival probability at each period.
-- Discounting future salaries to their present value using the interest rates provided.
+\itemize{
+\item Adjusting projected salaries by the survival probability at each period.
+\item Discounting future salaries to their present value using the interest rates provided.
+}
 }
 \examples{
 # Example inputs

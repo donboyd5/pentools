@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-12-18T13:15Z
+last_built: 2024-12-18T18:14Z
 urls:
   reference: https://donboyd5.github.io/pentools/reference
   article: https://donboyd5.github.io/pentools/articles

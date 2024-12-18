@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">pentools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,19 +45,55 @@
           <code><a href="annfactor.html">annfactor()</a></code>
 
         </dt>
-        <dd>#Present Value of Future Salaries (PVFS) function (to be applied to a vector of salaries) #remaining_prob_vec is a vector containing the remaining probabilities. interest_vec is a discount rate (ARR) vector. sal_vec is a vector containing the salaries. #' @export get_pvfs &lt;- function(remaining_prob_vec, interest_vec, sal_vec) PVFS &lt;- double(length = length(sal_vec)) for (i in 1:length(sal_vec)) remaining_prob_og &lt;- remaining_prob_veci:length(remaining_prob_vec) remaining_prob &lt;- remaining_prob_og / remaining_prob_og1 interest &lt;- interest_veci sal &lt;- sal_veci:length(sal_vec) sal_adjusted &lt;- sal * remaining_prob PVFSi &lt;- npv(interest, sal_adjusted) return(PVFS)</dd>
+        <dd>Calculate Annuity Factors with Survival and Cost-of-Living Adjustments</dd>
       </dl><dl><dt>
 
-          <code><a href="get_pvfs.html">get_pvfs()</a></code>
+          <code><a href="get_pmt0.html">get_pmt0()</a></code>
 
         </dt>
-        <dd>Calculate Present Value of Future Salaries (PVFS)</dd>
+        <dd>#' npv calculates the present value of future cashflows (cf) #' #' @param rate Annual discount rate (scalar double). #' @param cf A list of cash flows in n=length(cf) number of years #' #' @return Numeric value. #' @export #' #' @examples #' cf &lt;- c(100, 200, 300, 400, 500, 600) #' npv(0.05, cf) # 1704.37 #' @export npv &lt;- function(rate, cf) df &lt;- (1+rate)^(-(1:(length(cf)))) # Discount factor in each year based on rate pv &lt;- sum(cf * df) # The sum of the product of cash flow and discount factor in each year is PV return(pv) #Annuity factor for current retirees' benefits #We need this function to calculate the annuity factors when a constant COLA is granted after the first year #' @export</dd>
+      </dl><dl><dt>
+
+          <code><a href="get_pv.html">get_pv()</a></code>
+
+        </dt>
+        <dd>Calculate Present Value Factor</dd>
+      </dl><dl><dt>
+
+          <code><a href="get_pv_cf_roll.html">get_pv_cf_roll()</a></code>
+
+        </dt>
+        <dd>get_pv_cf_roll returns the remaining present value of future cash flows (cf) in every year forward</dd>
+      </dl><dl><dt>
+
+          <code><a href="get_pv_gpmt.html">get_pv_gpmt()</a></code>
+
+        </dt>
+        <dd>Calculate Present Value of a Growing Annuity Payment</dd>
+      </dl><dl><dt>
+
+          <code><a href="get_pv_pmt.html">get_pv_pmt()</a></code>
+
+        </dt>
+        <dd>Calculate Present Value of an Annuity Payment</dd>
+      </dl><dl><dt>
+
+          <code><a href="npv.html">npv()</a></code>
+
+        </dt>
+        <dd>npv calculates the present value of future cashflows (cf)</dd>
       </dl><dl><dt>
 
           <code><a href="pv.html">pv()</a></code>
 
         </dt>
         <dd>Present Value of a Growing Annuity</dd>
+      </dl><dl><dt>
+
+          <code><a href="roll_pv.html">roll_pv()</a></code>
+
+        </dt>
+        <dd>Rolling Present Value Calculation</dd>
       </dl></div>
   </main></div>
 

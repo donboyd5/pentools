@@ -130,25 +130,25 @@ get_pvfs <- function(remaining_prob_vec, interest_vec, sal_vec) {
 #' }
 
 
-#Annuity factor for current retirees' benefits
-#We need this function to calculate the annuity factors when a constant COLA is granted after the first year
-#' @export
-annfactor <- function(surv_DR_vec, cola_vec, one_time_cola = F){
-  annfactor_vec <- double(length(surv_DR_vec))
-  for (i in 1:length(annfactor_vec)) {
-    cola <- ifelse(one_time_cola == F, cola_vec[i], 0)
-
-    if (i == length(annfactor_vec)) {
-      cola_project <- 0
-    } else {
-      cola_project <- c(0, rep(cola, length((i+1):length(cola_vec))))
-    }
-
-    cumprod_cola <- cumprod(1 + cola_project)
-    annfactor_vec[i] <- sum((surv_DR_vec[i:length(surv_DR_vec)] / surv_DR_vec[i]) * cumprod_cola)
-  }
-  return(annfactor_vec)
-}
+#' #Annuity factor for current retirees' benefits
+#' #We need this function to calculate the annuity factors when a constant COLA is granted after the first year
+#' #' @export
+# annfactor <- function(surv_DR_vec, cola_vec, one_time_cola = F){
+#   annfactor_vec <- double(length(surv_DR_vec))
+#   for (i in 1:length(annfactor_vec)) {
+#     cola <- ifelse(one_time_cola == F, cola_vec[i], 0)
+#
+#     if (i == length(annfactor_vec)) {
+#       cola_project <- 0
+#     } else {
+#       cola_project <- c(0, rep(cola, length((i+1):length(cola_vec))))
+#     }
+#
+#     cumprod_cola <- cumprod(1 + cola_project)
+#     annfactor_vec[i] <- sum((surv_DR_vec[i:length(surv_DR_vec)] / surv_DR_vec[i]) * cumprod_cola)
+#   }
+#   return(annfactor_vec)
+# }
 
 #Amo payment functions
 #pmt0 = basic amo payment calculation, assuming payment beginning of period

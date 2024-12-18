@@ -1,39 +1,44 @@
-#' #' Calculate Annuity Factors with Survival and Cost-of-Living Adjustments
-#' #'
-#' #' This function computes annuity factors for a series of survival discount rates, incorporating cost-of-living adjustments (COLA). It optionally supports a one-time COLA adjustment.
-#' #'
-#' #' @param surv_DR_vec Numeric vector. A vector of survival discount rates, representing the probabilities of survival for each period.
-#' #' @param cola_vec Numeric vector. A vector of cost-of-living adjustment (COLA) rates for each period.
-#' #' @param one_time_cola Logical, optional. If TRUE, a one-time COLA is applied (default is FALSE), this is not coded as no COLAs.
-#' #'
-#' #' @return Numeric vector. A vector of annuity factors, considering COLAs where each element corresponds to a period's annuity factor.
-#' #'
-#' #' @examples
-#' #' # Example with survival discount rates and COLA rates
-#' #' surv_DR_vec <- c(1.0, 0.9, 0.8, 0.7)
-#' #' cola_vec <- c(0.02, 0.02, 0.02, 0.02)
-#' #' annfactor(surv_DR_vec, cola_vec)
-#' #'
-#' #' # Example with a one-time COLA
-#' #' annfactor(surv_DR_vec, cola_vec, one_time_cola = FALSE)
-#' #'
-#' #' @export
-# annfactor <- function(surv_DR_vec, cola_vec, one_time_cola = FALSE) {
-#   N <- length(surv_DR_vec)                                     # Define the length of the input vector
-#   annfactor_vec <- numeric(N)                                  # Create the output vector with the same length
-#
-#   for (i in 1:N) {
-#     cola <- ifelse(one_time_cola, 0, cola_vec[i])              # If one-time COLA, the cola is 0 (Question: This actually means no COLAs)
-#     cola_project <- c(0, rep(cola, max(0, N - i)))             # Project COLA for future periods with the same COLA rate
-#
-#     cumprod_cola <- cumprod(1 + cola_project)                  # Calculate the cumulative product of previous COLA rates
-#     surv_ratio <- surv_DR_vec[i:N] / surv_DR_vec[i]            # Set the base year survival as 1, calculate probability of survival in future years
-#
-#     annfactor_vec[i] <- sum(surv_ratio * cumprod_cola)         # The sum of product of cumulative COLA increase and survival rates to a future year is the annuity factor considering COLA
-#   }
-#
-#   return(annfactor_vec)
-# }
+#' Calculate Annuity Factors with Survival and Cost-of-Living Adjustments
+#'
+#' This function computes annuity factors for a series of survival discount rates, incorporating cost-of-living adjustments (COLA). It optionally supports a one-time COLA adjustment.
+#'
+#' @param surv_DR_vec Numeric vector. A vector of survival discount rates, representing the probabilities of survival for each period.
+#' @param cola_vec Numeric vector. A vector of cost-of-living adjustment (COLA) rates for each period.
+#' @param one_time_cola Logical, optional. If TRUE, a one-time COLA is applied (default is FALSE), this is not coded as no COLAs.
+#'
+#' @return Numeric vector. A vector of annuity factors, considering COLAs where each element corresponds to a period's annuity factor.
+#'
+#' @examples
+#' # Example with survival discount rates and COLA rates
+#' surv_DR_vec <- c(1.0, 0.9, 0.8, 0.7)
+#' cola_vec <- c(0.02, 0.02, 0.02, 0.02)
+#' annfactor(surv_DR_vec, cola_vec)
+#'
+#' # Example with a one-time COLA
+#' annfactor(surv_DR_vec, cola_vec, one_time_cola = FALSE)
+#'
+#' @export
+annfactor <- function(surv_DR_vec, cola_vec, one_time_cola = FALSE) {
+  N <- length(surv_DR_vec)                                     # Define the length of the input vector
+  annfactor_vec <- numeric(N)                                  # Create the output vector with the same length
+
+  for (i in 1:N) {
+    cola <- ifelse(one_time_cola, 0, cola_vec[i])              # If one-time COLA, the cola is 0 (Question: This actually means no COLAs)
+    cola_project <- c(0, rep(cola, max(0, N - i)))             # Project COLA for future periods with the same COLA rate
+
+    cumprod_cola <- cumprod(1 + cola_project)                  # Calculate the cumulative product of previous COLA rates
+    surv_ratio <- surv_DR_vec[i:N] / surv_DR_vec[i]            # Set the base year survival as 1, calculate probability of survival in future years
+
+    annfactor_vec[i] <- sum(surv_ratio * cumprod_cola)         # The sum of product of cumulative COLA increase and survival rates to a future year is the annuity factor considering COLA
+  }
+
+  return(annfactor_vec)
+}
+
+
+
+# functions that need to be tested ----------------------------------------
+
 
 #' #' Calculate first payment of an annuity due
 #' #'
@@ -57,6 +62,7 @@
 #'   }
 #'   return(pmt)
 #' }
+#'
 
 #' #' Calculate first payment of a growth annuity due
 #' #'

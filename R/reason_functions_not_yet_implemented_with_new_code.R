@@ -106,20 +106,20 @@ recur_grow3 <- function(x, g, nper) {
 #Present Value of Future Benefits (PVFB) function (to be applied to a vector of "Pension Wealth") for active members
 #sep_rate_vec is a vector containing separation rates. interest_vec is a discount rate (ARR) vector. value_vect is a vector containing the present values of pension benefits at separation ages.
 #The purpose of this function is to calculate the PVFB at each active age (not just the entry age)
-# #' @export
-#' get_pvfb <- function(sep_rate_vec, interest_vec, value_vec) {
-#'   PVFB <- double(length = length(value_vec))
-#'   for (i in 1:length(value_vec)) {
-#'     sep_rate <- sep_rate_vec[i:length(sep_rate_vec)]
-#'     #sep_prob in a given year is the probability that the member will survive all the previous years and get terminated exactly in the given year
-#'     sep_prob <- cumprod(1 - lag(sep_rate, n = 2, default = 0)) * lag(sep_rate, default = 0)
-#'     interest <- interest_vec[i]
-#'     value <- value_vec[i:length(value_vec)]
-#'     value_adjusted <- value * sep_prob
-#'     PVFB[i] <- npv(interest, value_adjusted[2:length(value_adjusted)])
-#'   }
-#'   return(PVFB)
-#' }
+#' @export
+get_pvfb <- function(sep_rate_vec, interest_vec, value_vec) {
+  PVFB <- double(length = length(value_vec))
+  for (i in 1:length(value_vec)) {
+    sep_rate <- sep_rate_vec[i:length(sep_rate_vec)]
+    #sep_prob in a given year is the probability that the member will survive all the previous years and get terminated exactly in the given year
+    sep_prob <- cumprod(1 - lag(sep_rate, n = 2, default = 0)) * lag(sep_rate, default = 0)
+    interest <- interest_vec[i]
+    value <- value_vec[i:length(value_vec)]
+    value_adjusted <- value * sep_prob
+    PVFB[i] <- npv(interest, value_adjusted[2:length(value_adjusted)])
+  }
+  return(PVFB)
+}
 
 
 #Present Value of Future Salaries (PVFS) function (to be applied to a vector of salaries)

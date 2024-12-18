@@ -260,43 +260,43 @@ roll_pv <- function(rate, g = 0, nper, pmt_vec, t = 1) {
 #' }
 
 
-#' Calculate the Present Value of Future Benefits (PVFB)
-#'
-#' Given a vector of separation rates, a vector of corresponding interest rates, and a vector of
-#' future values (benefits), this function computes the present value of these benefits. At each
-#' period `i`, it calculates the probability of separation and then discounts the subsequent
-#' future values back to the present using the provided interest rates.
-#'
-#' @param sep_rate_vec Numeric vector. The annual separation rates for each future period.
-#' @param interest_vec Numeric vector. The annual interest (discount) rates use in that period.
-#' @param value_vec Numeric vector. The future benefits payable at each period.
-#'
-#' @return A numeric vector of the same length as `value_vec`, where each element represents the
-#'         present value of future benefits starting from that period.
-#' @export
-#'
-#' @examples
-#' sep_rate_vec <- c(0.01, 0.02, 0.03, 0.04)
-#' interest_vec <- c(0.05, 0.05, 0.05, 0.05)
-#' value_vec <- c(100, 200, 300, 400)
-#' get_pvfb(sep_rate_vec, interest_vec, value_vec)
-get_pvfb <- function(sep_rate_vec, interest_vec, value_vec) {
-  N <- length(value_vec)
-  PVFB <- double(length = N)
-  for (i in 1:N) {
-    sep_rate <- sep_rate_vec[i:N]
-    sep_prob <- cumprod(1 - sep_rate) * sep_rate       # Probability of separating in each subsequent period
-    interest <- interest_vec[i]
-    if (i < N) {
-      value_sub <- value_vec[(i+1):N]                  # Payment in t+1 until the end of periods
-      sep_prob_sub <- sep_prob[-1]                     # Probability of remaining in the plan until the period t
-      df_sub <- (1 + interest)^(-(1:length(value_sub))) # Discount factors in each year based on the interest rate used in t
-      PVFB[i] <- sum(value_sub * sep_prob_sub * df_sub) # The product of probability, discount factor, future values (benefits) is PVFB
-    } else {
-      PVFB[i = N] <- 0                                 # At the last period, there are no future periods, so PVFB is 0
-    }
-  }
-  return(PVFB)
-}
+#' #' Calculate the Present Value of Future Benefits (PVFB)
+#' #'
+#' #' Given a vector of separation rates, a vector of corresponding interest rates, and a vector of
+#' #' future values (benefits), this function computes the present value of these benefits. At each
+#' #' period `i`, it calculates the probability of separation and then discounts the subsequent
+#' #' future values back to the present using the provided interest rates.
+#' #'
+#' #' @param sep_rate_vec Numeric vector. The annual separation rates for each future period.
+#' #' @param interest_vec Numeric vector. The annual interest (discount) rates use in that period.
+#' #' @param value_vec Numeric vector. The future benefits payable at each period.
+#' #'
+#' #' @return A numeric vector of the same length as `value_vec`, where each element represents the
+#' #'         present value of future benefits starting from that period.
+#' #' @export
+#' #'
+#' #' @examples
+#' #' sep_rate_vec <- c(0.01, 0.02, 0.03, 0.04)
+#' #' interest_vec <- c(0.05, 0.05, 0.05, 0.05)
+#' #' value_vec <- c(100, 200, 300, 400)
+#' #' get_pvfb(sep_rate_vec, interest_vec, value_vec)
+#' get_pvfb <- function(sep_rate_vec, interest_vec, value_vec) {
+#'   N <- length(value_vec)
+#'   PVFB <- double(length = N)
+#'   for (i in 1:N) {
+#'     sep_rate <- sep_rate_vec[i:N]
+#'     sep_prob <- cumprod(1 - sep_rate) * sep_rate       # Probability of separating in each subsequent period
+#'     interest <- interest_vec[i]
+#'     if (i < N) {
+#'       value_sub <- value_vec[(i+1):N]                  # Payment in t+1 until the end of periods
+#'       sep_prob_sub <- sep_prob[-1]                     # Probability of remaining in the plan until the period t
+#'       df_sub <- (1 + interest)^(-(1:length(value_sub))) # Discount factors in each year based on the interest rate used in t
+#'       PVFB[i] <- sum(value_sub * sep_prob_sub * df_sub) # The product of probability, discount factor, future values (benefits) is PVFB
+#'     } else {
+#'       PVFB[i = N] <- 0                                 # At the last period, there are no future periods, so PVFB is 0
+#'     }
+#'   }
+#'   return(PVFB)
+#' }
 
 

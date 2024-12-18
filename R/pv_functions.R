@@ -300,3 +300,34 @@ roll_pv <- function(rate, g = 0, nper, pmt_vec, t = 1) {
 #' }
 
 
+
+# Boyd functions ----------------------------------------------------------
+#
+# npv <- function(cashflows, rate, immediate=FALSE) {
+#   n <- length(cashflows)
+#   if (immediate) { # cash flows at beginning of period
+#     powers <- 0:(n-1)
+#   } else {  # cash flows at end of period
+#     powers <- 1:n
+#   }
+#   sum(cashflows / (1 + rate)^powers)
+# }
+
+
+# get_pvfb <- function(sep_rate_vec, interest_vec, value_vec){
+#   pv <- function(i){
+#     sep_prob <- cumprod(1 - data.table::shift(sep_rate_vec[i:end], n = 2, fill = 0)) *
+#       data.table::shift(sep_rate_vec[i:end], n = 1, fill = 0)
+#     cashflow <- sep_prob * value_vec[i:end]
+#     npv(cashflow, interest_vec[i], immediate = TRUE)
+#   }
+#   end <- length(sep_rate_vec)
+#   pvfb <- double(length = end)
+#   for (i in 1:end) {
+#     pvfb[i] <- pv(i)
+#   }
+#   # CAUTION: temporary treatment to replace zeros with NAs to match FRS model results
+#   pvfb[pvfb == 0] <- NA
+#   pvfb
+# }
+

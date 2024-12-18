@@ -1,7 +1,7 @@
 Package: pentools
 Type: Package
 Title: Tools for Working with pendata and penmodel
-Version: 0.1.0
+Version: 0.2.0
 Author: Don Boyd, Gang Chen, and Reason Foundation
 Maintainer: Don Boyd <donboyd5@gmail.com>
 Description: More about what it does (maybe more than one line)

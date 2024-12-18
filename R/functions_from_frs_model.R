@@ -1,13 +1,3 @@
-# library(zoo)
-
-
-# #Present Value function
-# pv <- function(rate, g = 0, nper, pmt, t = 1) {
-#   r <- (1 + rate)/(1 + g) - 1
-#   PV <- pmt/r * (1 - (1 / (1 + r)^nper)) / (1 + g) * (1 + rate)^(1 - t)
-#   return(PV)
-# }
-
 
 #Rolling Present Value function. Note that the first value in the pmt_vec vector must be zero.
 #' @export

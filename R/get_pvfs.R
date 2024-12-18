@@ -23,7 +23,9 @@
 #' get_pvfs(remaining_prob_vec, interest_vec, sal_vec)
 #'
 #' @export
-get_pvfs <- function(remaining_prob_vec, interest_vec, sal_vec) {
+get_pvfs <- function(remaining_prob_vec,
+                     interest_vec,
+                     sal_vec) {
   N <- length(sal_vec)
   PVFS <- double(length = N)
   for (i in 1:N) {
